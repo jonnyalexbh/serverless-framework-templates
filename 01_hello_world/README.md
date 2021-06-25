@@ -1,10 +1,4 @@
-# Serverless Framework
-
-**Install**
-
-```sh
-$ npm install -g serverless
-```
+# Serverless Hello World
 
 **Create Project**
 
