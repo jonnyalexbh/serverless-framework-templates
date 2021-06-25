@@ -1,0 +1,16 @@
+{
+  "name": "03_crud_with_sequealize",
+  "version": "1.0.0",
+  "description": "**Create Project**",
+  "main": "handler.js",
+  "scripts": {
+    "start": "sls offline"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "serverless-offline": "^7.0.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
