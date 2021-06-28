@@ -3,11 +3,22 @@ frameworkVersion: '2'
 
 plugins:
   - serverless-offline
+  - serverless-sequelize-migrations
+
+custom:
+  migrationsPath: './database/migrations'
 
 provider:
   name: aws
   runtime: nodejs12.x
   lambdaHashingVersion: 20201221
+  environment:
+    DB_DIALECT: 'database_dialect'
+    DB_NAME: 'database_name'
+    DB_USERNAME: 'database_username'
+    DB_PASSWORD: 'database_password'
+    DB_HOST: 'database_host'
+    DB_PORT: 'database_port'
 
 functions:
   authors:

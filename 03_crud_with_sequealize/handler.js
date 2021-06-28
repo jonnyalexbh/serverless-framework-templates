@@ -1,8 +1,4 @@
-'use strict';
-
-module.exports.getAuthors = event => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ data: 'get authors' }),
-  };
-};
+module.exports.getAuthors = async () => ({
+  statusCode: 200,
+  body: JSON.stringify({ data: 'get authors' }),
+});
