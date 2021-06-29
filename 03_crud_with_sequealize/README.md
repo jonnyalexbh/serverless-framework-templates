@@ -19,9 +19,12 @@ In that file you'll find two sections:
 
 | Package                         | Description                                                           |
 | ------------------------------- | --------------------------------------------------------------------- |
-| serverless-sequelize-migrations | A plugin to manage sequelize migrations on serverless projects        |
+| sequelize                       | ORM                                                                   |
 | pg                              | Driver database                                                       |
 | pg-hstore                       | Driver database                                                       |
+| serverless-sequelize-migrations | A plugin to manage sequelize migrations on serverless projects        |
+| pino                            | Logging library                                                       |
+| pino-pretty                     | Module can be used to format logs                                     |
 
 ### `devDependencies`
 
@@ -50,6 +53,3 @@ $ npx eslint --init
 ```sh
 $ sls deploy
 ```
-
-
-
