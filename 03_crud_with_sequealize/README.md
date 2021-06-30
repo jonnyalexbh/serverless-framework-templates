@@ -36,6 +36,7 @@ In that file you'll find two sections:
 ### Migrations
 ```sh
 $ sls migrations create --name authors
+$ sls migrations create --name publications
 $ sls migrations up
 $ sls migrations down
 $ sls migrations reset

@@ -15,6 +15,17 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      email: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        unique: true,
+      },
+      date_of_birth: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+      created_at: Sequelize.DATE,
+      updated_at: Sequelize.DATE,
     }),
 
   down: (queryInterface) => queryInterface.dropTable('authors'),
