@@ -1,0 +1,30 @@
+service: middy-middleware
+
+frameworkVersion: '2'
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+
+functions:
+  users:
+    handler: src/users.store
+    name: storeUser
+    events:
+      - http:
+          path: users
+          method: post
+          cors: true
+
+  authors:
+    handler: src/authors.store
+    name: storeAuthor
+    events:
+      - http:
+          path: authors
+          method: post
+          cors: true
