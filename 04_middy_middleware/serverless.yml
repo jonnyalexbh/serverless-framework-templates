@@ -12,7 +12,7 @@ provider:
 
 functions:
   users:
-    handler: src/users.store
+    handler: src/handlers/users.store
     name: storeUser
     events:
       - http:
@@ -21,7 +21,7 @@ functions:
           cors: true
 
   authors:
-    handler: src/authors.store
+    handler: src/handlers/authors.store
     name: storeAuthor
     events:
       - http:
