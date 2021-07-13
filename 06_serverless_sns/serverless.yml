@@ -1,0 +1,110 @@
+service: jonnyBerrio
+useDotenv: true
+frameworkVersion: '2'
+
+plugins:
+  - serverless-offline
+  - serverless-iam-roles-per-function
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: us-east-1
+  stage: ${opt:stage, 'dev'}
+  profile: default
+  environment:
+    AWS_REGION_CUSTOM: ${env:AWS_REGION_CUSTOM}
+    DYNAMODB_TABLE: ${env:DYNAMODB_TABLE}
+    MAXIMUM_AGE: ${env:MAXIMUM_AGE}
+  lambdaHashingVersion: 20201221
+
+custom:
+  environments:
+    region: us-east-1
+    accountId: 308110467241
+
+resources:
+  Resources:
+    ClientCreated:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: '${self:service}-client-${self:provider.stage}'
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+    ClientCreatedNotificationSls:
+      Type: 'AWS::SNS::Topic'
+      Properties:
+        TopicName: '${self:service}-createdNotificationSls-${self:provider.stage}'
+        Subscription:
+          - Protocol: sqs
+            Endpoint: !GetAtt CreateCard.Arn
+    CreateCard:
+      Type: 'AWS::SQS::Queue'
+      Properties:
+        QueueName: '${self:service}-createCardSls-${self:provider.stage}'
+
+functions:
+  createClient-sls:
+    handler: src/handlers/clients.create
+    description: 'Create Client'
+    iamRoleStatementsName: jonnyBerrio-createClientSls
+    iamRoleStatements:
+      - Effect: 'Allow'
+        Action:
+          - dynamodb:PutItem
+        Resource: 'arn:aws:dynamodb:us-east-1:308110467241:table/jonnyBerrio-client-dev'
+      - Effect: 'Allow'
+        Action:
+          - sns:ListTagsForResource
+          - sns:ListSubscriptionsByTopic
+          - sns:Publish
+          - sns:GetTopicAttributes
+          - sns:DeleteTopic
+          - sns:CreateTopic
+          - sns:SetTopicAttributes
+          - sns:Subscribe
+          - sns:ConfirmSubscription
+        Resource: 'arn:aws:sns:us-east-1:308110467241:jonnyBerrio-createdNotificationSls-dev'
+    events:
+      - http:
+          path: client
+          method: POST
+          cors: true
+
+  createCardSls:
+    handler: src/handlers/cards.create
+    description: 'Create Card'
+    iamRoleStatementsName: jonnyBerrio-createCardSls
+    iamRoleStatements:
+      - Effect: 'Allow'
+        Action:
+          - dynamodb:UpdateItem
+        Resource: 'arn:aws:dynamodb:us-east-1:308110467241:table/jonnyBerrio-client-dev'
+      - Effect: 'Allow'
+        Action:
+          - sqs:DeleteMessage
+          - sqs:GetQueueUrl
+          - sqs:ChangeMessageVisibility
+          - sqs:SendMessageBatch
+          - sqs:ReceiveMessage
+          - sqs:SendMessage
+          - sqs:GetQueueAttributes
+          - sqs:ListQueueTags
+          - sqs:ListDeadLetterSourceQueues
+          - sqs:DeleteMessageBatch
+          - sqs:PurgeQueue
+          - sqs:DeleteQueue
+          - sqs:CreateQueue
+          - sqs:ChangeMessageVisibilityBatch
+          - sqs:SetQueueAttributes
+        Resource: 'arn:aws:sqs:us-east-1:308110467241:jonnyBerrio-createCardSls-dev'
+    events:
+      - sqs: 
+          arn: arn:aws:sqs:us-east-1:308110467241:jonnyBerrio-createCardSls-dev

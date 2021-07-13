@@ -42,14 +42,6 @@ $ sls migrations down
 $ sls migrations reset
 $ sls migrations list
 ```
-
-### Install eslint airbnb
-
-```sh
-$ npm install --save-dev eslint
-$ npx eslint --init
-```
-
 ### Deploy
 ```sh
 $ sls deploy
