@@ -1,7 +1,9 @@
 const dynamo = require('ebased/service/storage/dynamo');
 const { ErrorHandled } = require('ebased/util/error');
 const config = require('../config');
-const { randomGift } = require('../utils');
+const { randomGift, getCard } = require('../utils');
+const { calculateAge } = require('../helpers');
+const { MAXIMUM_AGE } = require('../constants');
 
 exports.createClient = (client) => dynamo.putItem(
   { TableName: config.dynamodb.table, Item: client },
@@ -44,7 +46,10 @@ exports.createCard = async (body) => {
     },
     ExpressionAttributeValues: {
       ':c': {
-        number: '678',
+        creditCardNumber: getCard.creditCardNumber,
+        expirationDate: getCard.expirationDate,
+        securityCode: getCard.securityCode,
+        type: calculateAge(body.birth) > MAXIMUM_AGE ? 'Gold' : 'Classic',
       },
     },
     UpdateExpression: 'set #C = :c',

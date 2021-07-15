@@ -1,8 +1,8 @@
 create-client: 
   description: 'Create Client'
   environment:
-    # CLIENTS_TABLE: !Ref ClientsTable
-    CLIENTS_TABLE: ${env:CLIENTS_TABLE}
+    CLIENTS_TABLE: !Ref ClientsTable
+    # CLIENTS_TABLE: ${env:CLIENTS_TABLE}
     TOPIC_ARN_CLIENT: !Ref ClientCreatedNotificationSns
     # TOPIC_ARN_CLIENT: !Ref ClientCreatedNotificationSns
   events: 
@@ -59,8 +59,8 @@ create-gift:
 get-clients: 
   description: 'Get Client'
   environment:
-    # CLIENTS_TABLE: !Ref ClientsTable
-    CLIENTS_TABLE: ${env:CLIENTS_TABLE}
+    CLIENTS_TABLE: !Ref ClientsTable
+    # CLIENTS_TABLE: ${env:CLIENTS_TABLE}
   iamRoleStatementsInherit: true
   iamRoleStatements: 
     - Effect: Allow
@@ -78,8 +78,8 @@ get-clients:
 get-client: 
   description: 'Get Client'
   environment:
-    # CLIENTS_TABLE: !Ref ClientsTable
-    CLIENTS_TABLE: ${env:CLIENTS_TABLE}
+    CLIENTS_TABLE: !Ref ClientsTable
+    # CLIENTS_TABLE: ${env:CLIENTS_TABLE}
   iamRoleStatementsInherit: true
   iamRoleStatements: 
     - Effect: Allow
@@ -97,13 +97,13 @@ get-client:
 delete-client: 
   description: 'Delete Client'
   environment:
-    # CLIENTS_TABLE: !Ref ClientsTable
-    CLIENTS_TABLE: ${env:CLIENTS_TABLE}
+    CLIENTS_TABLE: !Ref ClientsTable
+    # CLIENTS_TABLE: ${env:CLIENTS_TABLE}
   iamRoleStatementsInherit: true
   iamRoleStatements: 
     - Effect: Allow
       Action:
-        - dynamodb:DeleteItem
+        - dynamodb:UpdateItem
       Resource:
         - !GetAtt ClientsTable.Arn
   handler: src/clients/handler/client.delete
