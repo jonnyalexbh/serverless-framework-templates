@@ -10,7 +10,7 @@ class ClientCreatedEvent extends DownstreamEvent {
       schema: {
         strict: false,
         dni: { type: String, required: true },
-        name: { type: String, required: true },
+        cNames: { type: String, required: true },
       },
     });
   }

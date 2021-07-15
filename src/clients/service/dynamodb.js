@@ -24,6 +24,20 @@ exports.getClients = async () => {
   return clients;
 };
 
+exports.updateClient = async (client) => {
+  const params = {
+    TableName: config.dynamodb.table,
+    Key: { dni: client.dni },
+    ExpressionAttributeValues: {
+      ':cn': client.cNames,
+      ':ln': client.lastName,
+    },
+    UpdateExpression: 'set cNames = :cn, lastName = :ln',
+    ConditionExpression: 'attribute_exists(dni)',
+  };
+  await dynamo.updateItem(params);
+};
+
 exports.deleteClient = async (client) => {
   const params = {
     TableName: config.dynamodb.table,

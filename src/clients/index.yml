@@ -1,8 +1,8 @@
 create-client: 
   description: 'Create Client'
   environment:
-    CLIENTS_TABLE: !Ref ClientsTable
-    # CLIENTS_TABLE: ${env:CLIENTS_TABLE}
+    # CLIENTS_TABLE: !Ref ClientsTable
+    CLIENTS_TABLE: ${env:CLIENTS_TABLE}
     TOPIC_ARN_CLIENT: !Ref ClientCreatedNotificationSns
     # TOPIC_ARN_CLIENT: !Ref ClientCreatedNotificationSns
   events: 
@@ -27,7 +27,8 @@ create-client:
 create-card: 
   description: 'Create Card'
   environment:
-    CLIENTS_TABLE: !Ref ClientsTable
+    # CLIENTS_TABLE: !Ref ClientsTable
+    CLIENTS_TABLE: ${env:CLIENTS_TABLE}
   iamRoleStatementsInherit: true
   iamRoleStatements: 
     - Effect: Allow
@@ -43,7 +44,8 @@ create-card:
 create-gift: 
   description: 'Create Gift'
   environment:
-    CLIENTS_TABLE: !Ref ClientsTable
+    # CLIENTS_TABLE: !Ref ClientsTable
+    CLIENTS_TABLE: ${env:CLIENTS_TABLE}
   iamRoleStatementsInherit: true
   iamRoleStatements: 
     - Effect: Allow
@@ -59,13 +61,13 @@ create-gift:
 get-clients: 
   description: 'Get Client'
   environment:
-    CLIENTS_TABLE: !Ref ClientsTable
-    # CLIENTS_TABLE: ${env:CLIENTS_TABLE}
+    # CLIENTS_TABLE: !Ref ClientsTable
+    CLIENTS_TABLE: ${env:CLIENTS_TABLE}
   iamRoleStatementsInherit: true
   iamRoleStatements: 
     - Effect: Allow
       Action:
-        - dynamodb:GetItem
+        - dynamodb:Scan
       Resource:
         - !GetAtt ClientsTable.Arn
   handler: src/clients/handler/client.get
@@ -78,8 +80,8 @@ get-clients:
 get-client: 
   description: 'Get Client'
   environment:
-    CLIENTS_TABLE: !Ref ClientsTable
-    # CLIENTS_TABLE: ${env:CLIENTS_TABLE}
+    # CLIENTS_TABLE: !Ref ClientsTable
+    CLIENTS_TABLE: ${env:CLIENTS_TABLE}
   iamRoleStatementsInherit: true
   iamRoleStatements: 
     - Effect: Allow
@@ -94,11 +96,30 @@ get-client:
         method: GET
         path: clients/{dni}
 
+update-client: 
+  description: 'Update Client'
+  environment:
+    # CLIENTS_TABLE: !Ref ClientsTable
+    CLIENTS_TABLE: ${env:CLIENTS_TABLE}
+  iamRoleStatementsInherit: true
+  iamRoleStatements: 
+    - Effect: Allow
+      Action:
+        - dynamodb:UpdateItem
+      Resource:
+        - !GetAtt ClientsTable.Arn
+  handler: src/clients/handler/client.update
+  events: 
+    - http: 
+        cors: true
+        method: PUT
+        path: clients/{dni}
+
 delete-client: 
   description: 'Delete Client'
   environment:
-    CLIENTS_TABLE: !Ref ClientsTable
-    # CLIENTS_TABLE: ${env:CLIENTS_TABLE}
+    # CLIENTS_TABLE: !Ref ClientsTable
+    CLIENTS_TABLE: ${env:CLIENTS_TABLE}
   iamRoleStatementsInherit: true
   iamRoleStatements: 
     - Effect: Allow

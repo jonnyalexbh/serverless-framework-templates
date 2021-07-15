@@ -1,7 +1,7 @@
 /* eslint-disable no-dupe-keys */
 const { InputValidation } = require('ebased/schema/inputValidation');
 
-class CreateCardInputSchema extends InputValidation {
+class UpdateCardInputSchema extends InputValidation {
   constructor(payload, meta) {
     super({
       source: meta.status,
@@ -11,9 +11,11 @@ class CreateCardInputSchema extends InputValidation {
       schema: {
         strict: false,
         cNames: { type: String, required: true },
+        lastName: { type: String, required: true },
+        birth: { type: String, required: true },
       },
     });
   }
 }
 
-module.exports = CreateCardInputSchema;
+module.exports = UpdateCardInputSchema;
