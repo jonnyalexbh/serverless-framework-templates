@@ -1,0 +1,114 @@
+create-client: 
+  description: 'Create Client'
+  environment:
+    # CLIENTS_TABLE: !Ref ClientsTable
+    CLIENTS_TABLE: ${env:CLIENTS_TABLE}
+    TOPIC_ARN_CLIENT: !Ref ClientCreatedNotificationSns
+    # TOPIC_ARN_CLIENT: !Ref ClientCreatedNotificationSns
+  events: 
+    - http: 
+        cors: true
+        method: POST
+        path: clients
+  handler: src/clients/handler/client.create
+  iamRoleStatementsInherit: true
+  iamRoleStatements: 
+    - Effect: Allow
+      Action: 
+        - dynamodb:PutItem
+      Resource: 
+        - !GetAtt ClientsTable.Arn
+    - Effect: Allow
+      Action:
+        - sns:Publish
+      Resource:
+        - !Ref ClientCreatedNotificationSns
+
+create-card: 
+  description: 'Create Card'
+  environment:
+    CLIENTS_TABLE: !Ref ClientsTable
+  iamRoleStatementsInherit: true
+  iamRoleStatements: 
+    - Effect: Allow
+      Action:
+        - dynamodb:UpdateItem
+      Resource:
+        - !GetAtt ClientsTable.Arn
+  handler: src/clients/handler/card.create
+  events:
+    - sqs:
+        arn: !GetAtt CreatedCardSqs.Arn
+
+create-gift: 
+  description: 'Create Gift'
+  environment:
+    CLIENTS_TABLE: !Ref ClientsTable
+  iamRoleStatementsInherit: true
+  iamRoleStatements: 
+    - Effect: Allow
+      Action:
+        - dynamodb:UpdateItem
+      Resource:
+        - !GetAtt ClientsTable.Arn
+  handler: src/clients/handler/gift.create
+  events:
+    - sqs:
+        arn: !GetAtt CreatedGiftSqs.Arn
+
+get-clients: 
+  description: 'Get Client'
+  environment:
+    # CLIENTS_TABLE: !Ref ClientsTable
+    CLIENTS_TABLE: ${env:CLIENTS_TABLE}
+  iamRoleStatementsInherit: true
+  iamRoleStatements: 
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+      Resource:
+        - !GetAtt ClientsTable.Arn
+  handler: src/clients/handler/client.get
+  events: 
+    - http: 
+        cors: true
+        method: GET
+        path: clients
+
+get-client: 
+  description: 'Get Client'
+  environment:
+    # CLIENTS_TABLE: !Ref ClientsTable
+    CLIENTS_TABLE: ${env:CLIENTS_TABLE}
+  iamRoleStatementsInherit: true
+  iamRoleStatements: 
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+      Resource:
+        - !GetAtt ClientsTable.Arn
+  handler: src/clients/handler/client.getByDni
+  events: 
+    - http: 
+        cors: true
+        method: GET
+        path: clients/{dni}
+
+delete-client: 
+  description: 'Delete Client'
+  environment:
+    # CLIENTS_TABLE: !Ref ClientsTable
+    CLIENTS_TABLE: ${env:CLIENTS_TABLE}
+  iamRoleStatementsInherit: true
+  iamRoleStatements: 
+    - Effect: Allow
+      Action:
+        - dynamodb:DeleteItem
+      Resource:
+        - !GetAtt ClientsTable.Arn
+  handler: src/clients/handler/client.delete
+  events: 
+    - http: 
+        cors: true
+        method: DELETE
+        path: clients/{dni}

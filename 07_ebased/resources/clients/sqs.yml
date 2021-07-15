@@ -1,0 +1,10 @@
+Resources:
+  CreatedCardSqs:
+    Type: 'AWS::SQS::Queue'
+    Properties:
+      QueueName: '${self:service}-create-card-${self:provider.stage}'
+  CreatedGiftSqs:
+    Type: 'AWS::SQS::Queue'
+    Properties:
+      QueueName: '${self:service}-create-gift-${self:provider.stage}'
+

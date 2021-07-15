@@ -1,0 +1,26 @@
+service: ebased-jonny-berrio
+useDotenv: true
+frameworkVersion: '2'
+
+plugins:
+  - serverless-offline
+  - serverless-iam-roles-per-function
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: ${opt:region, 'us-east-1'}
+  stage: ${opt:stage, 'dev'}
+  profile: default
+  lambdaHashingVersion: 20201221
+
+custom:
+  clientTableName: ${self:service}-${self:provider.stage}-client-table
+
+functions:
+  - ${file(src/clients/index.yml)}
+
+resources:
+  - ${file(resources/clients/dynamodb.yml)}
+  - ${file(resources/clients/sns.yml)}
+  - ${file(resources/clients/sqs.yml)}
