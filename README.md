@@ -21,8 +21,8 @@ $ aws configure --profile <profile_name>
 | Command                         | Description                                                           |
 | ------------------------------- | --------------------------------------------------------------------- |
 | sls -v                          | Version                                                               |
-| sls deploy || sls deploy -v     | Deploy a Serverless service                                           |
-| sls remove -v || sls remove -v  | Remove the deployed service                                           |
+| sls deploy -v                   | Deploy a Serverless service                                           |
+| sls remove -v                   | Remove the deployed service                                           |
 | sls -h                          | Available options                                                     |
 
 **Create Project**
@@ -37,3 +37,20 @@ $ sls create -t <template> -p <name_project>
 $ npm install --save-dev eslint
 $ npx eslint --init
 ```
+
+### Using .nvmrc
+
+```sh
+$ touch .nvmrc
+$ nvm use
+```
+
+## Code Style Guides
+* Guideline:
+  * Use camelCase for variable name, naming function
+  * Use UpperCase for Constant Variable
+  * Use snake_case for file name
+
+### License
+
+MIT

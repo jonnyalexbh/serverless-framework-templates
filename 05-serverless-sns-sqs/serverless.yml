@@ -1,0 +1,20 @@
+service: serverless-sns-sqs
+
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+
+plugins:
+  - serverless-offline
+
+functions:
+  healthCheck:
+    handler: src/handler.healthCheck
+    events:
+      - http:
+          path: health
+          method: get
+          cors: true
