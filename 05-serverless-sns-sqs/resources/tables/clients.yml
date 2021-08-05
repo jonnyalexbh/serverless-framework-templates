@@ -1,0 +1,14 @@
+Resources: 
+  ClientsTable: 
+    Properties: 
+      AttributeDefinitions: 
+        - AttributeName: client_id
+          AttributeType: S
+      KeySchema: 
+        - AttributeName: client_id
+          KeyType: HASH
+      ProvisionedThroughput: 
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      TableName: "${self:custom.clientTableName}"
+    Type: "AWS::DynamoDB::Table"

@@ -50,6 +50,7 @@ $ nvm use
   * Use camelCase for variable name, naming function
   * Use UpperCase for Constant Variable
   * Use snake_case for file name
+  * Use snake_case for folder names except the main one
 
 ### License
 

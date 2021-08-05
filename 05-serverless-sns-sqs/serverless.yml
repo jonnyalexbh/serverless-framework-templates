@@ -1,20 +1,24 @@
-service: serverless-sns-sqs
+service: clients
 
 frameworkVersion: '2'
 
 provider:
   name: aws
   runtime: nodejs12.x
+  region: ${opt:region, 'us-east-1'}
+  stage: ${opt:stage, 'develop'}
+  profile: default
   lambdaHashingVersion: 20201221
 
 plugins:
   - serverless-offline
 
+custom:
+  stackPrefix: ${self:service}-sls-${self:provider.stage}
+  clientTableName: ${self:service}-table-${self:provider.stage}
+
 functions:
-  healthCheck:
-    handler: src/handler.healthCheck
-    events:
-      - http:
-          path: health
-          method: get
-          cors: true
+  - ${file(src/health_check/index.yml)}
+
+resources:
+  - ${file(resources/tables/clients.yml)}

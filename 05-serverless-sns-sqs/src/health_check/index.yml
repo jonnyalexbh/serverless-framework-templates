@@ -1,0 +1,9 @@
+HealthCheck:
+  handler: src/health_check/handler.healthCheck
+  name: ${file(resources/index.json):healthCheck}
+  description: 'Health Check'
+  events:
+    - http:
+        path: health
+        method: get
+        cors: true

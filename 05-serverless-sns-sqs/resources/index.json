@@ -1,0 +1,3 @@
+{
+  "healthCheck": "${self:custom.stackPrefix}-health-check"
+}
