@@ -1,0 +1,53 @@
+service: axios
+
+frameworkVersion: '2'
+
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: ${opt:region, 'us-east-1'}
+  stage: ${opt:stage, 'develop'}
+  profile: default
+  lambdaHashingVersion: 20201221
+
+plugins:
+  - serverless-offline
+  - serverless-dotenv-plugin
+
+functions:
+  GetAlbums:
+    handler: src/handlers/get_albums.handler
+    name: ${file(resources/index.json):albums.getAlbums}
+    description: Get Albums
+    environment:
+      GITHUB_BASE_URL: ${env:GITHUB_BASE_URL}
+      GITHUB_TOKEN: ${env:GITHUB_TOKEN}
+    events:
+    - http:
+        path: albums
+        method: get
+        cors: true
+
+  GetAlbum:
+    handler: src/handlers/get_album.handler
+    name: ${file(resources/index.json):albums.getAlbum}
+    description: Get Album
+    events:
+    - http:
+        path: albums/{id}
+        method: get
+        cors: true
+
+  MyRepositories:
+    handler: src/handlers/my_repositories.handler
+    name: get-repositories-${self:service}-sls-${self:provider.stage}
+    description: My Repositories
+    events:
+    - http:
+        path: repositories
+        method: get
+        cors: true
+
+

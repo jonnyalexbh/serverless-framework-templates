@@ -1,0 +1,6 @@
+{
+  "albums": {
+    "getAlbums": "get-albums-${self:service}-sls-${self:provider.stage}",
+    "getAlbum": "get-album-${self:service}-sls-${self:provider.stage}"
+  }
+}
