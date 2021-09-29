@@ -1,10 +1,9 @@
 # Serverless SNS, SQS
 
-
 **Create Project**
 
 ```sh
-$ sls create -t aws-nodejs -p serverless-sns-sqs
+$ sls create -t aws-nodejs -p 05-serverless-sns-sqs
 ```
 
 ## Dependencies

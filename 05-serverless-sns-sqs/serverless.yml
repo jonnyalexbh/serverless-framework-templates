@@ -1,17 +1,14 @@
-service: clients
+service: client
 
 frameworkVersion: '2'
 
 provider:
   name: aws
   runtime: nodejs12.x
+  profile: jonnyalexbh
   region: ${opt:region, 'us-east-1'}
   stage: ${opt:stage, 'develop'}
-  profile: default
   lambdaHashingVersion: 20201221
-
-plugins:
-  - serverless-offline
 
 custom:
   stackPrefix: ${self:service}-sls-${self:provider.stage}

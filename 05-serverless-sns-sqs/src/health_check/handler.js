@@ -1,4 +1,3 @@
-module.exports.healthCheck = async (event) => ({
-  statusCode: 200,
-  body: JSON.stringify({ message: 'Health Check Successful', input: event }),
-});
+const { jsonResponse } = require('../commons/helpers');
+
+module.exports.healthCheck = async (event) => jsonResponse({ message: 'Health Check Successful', input: event });

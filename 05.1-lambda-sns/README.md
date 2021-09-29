@@ -1,1 +1,0 @@
-# Lambda without serverless framework
