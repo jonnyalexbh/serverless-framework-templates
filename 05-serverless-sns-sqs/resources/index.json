@@ -1,3 +1,7 @@
 {
-  "healthCheck": "${self:custom.stackPrefix}-health-check"
+  "healthCheck": "${self:custom.stackPrefix}-health-check",
+  "clients": {
+    "lambdaName": "${self:custom.stackPrefix}-create-client",
+    "tableName": "${self:custom.stackPrefix}-clients-table"
+  }
 }

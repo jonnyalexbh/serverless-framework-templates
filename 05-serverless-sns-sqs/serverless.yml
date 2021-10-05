@@ -2,6 +2,9 @@ service: client
 
 frameworkVersion: '2'
 
+plugins:
+  - serverless-iam-roles-per-function
+
 provider:
   name: aws
   runtime: nodejs12.x
@@ -12,10 +15,10 @@ provider:
 
 custom:
   stackPrefix: ${self:service}-sls-${self:provider.stage}
-  clientTableName: ${self:service}-table-${self:provider.stage}
 
 functions:
   - ${file(src/health_check/index.yml)}
+  - ${file(src/clients/index.yml)}
 
 resources:
   - ${file(resources/tables/clients.yml)}

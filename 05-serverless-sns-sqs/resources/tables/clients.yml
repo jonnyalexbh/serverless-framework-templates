@@ -10,5 +10,5 @@ Resources:
       ProvisionedThroughput: 
         ReadCapacityUnits: 5
         WriteCapacityUnits: 5
-      TableName: "${self:custom.clientTableName}"
+      TableName: ${file(resources/index.json):clients.tableName}
     Type: "AWS::DynamoDB::Table"

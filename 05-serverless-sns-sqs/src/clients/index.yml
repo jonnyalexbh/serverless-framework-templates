@@ -1,0 +1,17 @@
+CreateClient:
+  handler: src/clients/handlers/create_client.handler
+  name: ${file(resources/index.json):clients.lambdaName}
+  description: 'Create Client'
+  iamRoleStatementsName: jonnyBerrio-createCardSls
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - dynamodb:PutItem
+      Resource: !GetAtt ClientsTable.Arn
+  events:
+    - http:
+        path: clients
+        method: post
+        cors: true
+  environment:
+    CLIENT_TABLE_NAME: ${file(resources/index.json):clients.tableName}
