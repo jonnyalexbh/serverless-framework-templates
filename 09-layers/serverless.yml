@@ -1,0 +1,35 @@
+service: layers
+
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: ${opt:region, 'us-east-1'}
+  stage: ${opt:stage, 'develop'}
+  profile: jonnyalexbh
+  lambdaHashingVersion: 20201221
+
+functions:
+  Healthcheck:
+    handler: handler.main
+    name: healthCheck
+    description: 'Health Check'
+    layers:
+      - {Ref: Layer1NodeModuleLambdaLayer}
+      - {Ref: SumNodeModuleLambdaLayer}
+    events:
+      - http:
+          path: health
+          method: GET
+          cors: true
+
+layers:
+  Layer1NodeModule:
+    path: layers
+    retain: false
+    description: Logger Layer
+  SumNodeModule:
+    path: layers
+    retain: false
+    description: Sum Layer
