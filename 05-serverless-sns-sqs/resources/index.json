@@ -2,6 +2,10 @@
   "healthCheck": "${self:custom.stackPrefix}-health-check",
   "clients": {
     "lambdaName": "${self:custom.stackPrefix}-create-client",
-    "tableName": "${self:custom.stackPrefix}-clients-table"
+    "tableName": "${self:custom.stackPrefix}-clients-table",
+    "createGift": "${self:custom.stackPrefix}-create-gift"
+  },
+  "notifications": {
+    "clientCreatedTopic": "${self:custom.stackPrefix}-topic"
   }
 }

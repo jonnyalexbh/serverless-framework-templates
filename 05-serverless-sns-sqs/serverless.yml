@@ -21,4 +21,6 @@ functions:
   - ${file(src/clients/index.yml)}
 
 resources:
-  - ${file(resources/tables/clients.yml)}
+  - ${file(resources/tables.yml)}
+  - ${file(resources/sns.yml)}
+  - ${file(resources/sqs.yml)}

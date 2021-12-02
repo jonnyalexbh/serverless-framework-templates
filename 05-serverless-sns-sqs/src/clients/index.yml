@@ -8,6 +8,10 @@ CreateClient:
       Action:
         - dynamodb:PutItem
       Resource: !GetAtt ClientsTable.Arn
+    - Effect: 'Allow'
+      Action:
+        - sns:Publish
+      Resource: !Ref ClientCreatedNotificationTopic
   events:
     - http:
         path: clients
@@ -15,3 +19,4 @@ CreateClient:
         cors: true
   environment:
     CLIENT_TABLE_NAME: ${file(resources/index.json):clients.tableName}
+    CLIENT_CREATED_TOPIC: !Ref ClientCreatedNotificationTopic

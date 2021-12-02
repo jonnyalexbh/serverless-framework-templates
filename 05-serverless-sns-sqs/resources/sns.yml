@@ -1,0 +1,6 @@
+Resources:
+  ClientCreatedNotificationTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: ${file(resources/index.json):notifications.clientCreatedTopic}
+      DisplayName: Notification Create Client
